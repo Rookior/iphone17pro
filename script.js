@@ -130,30 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---- 机型比较弹窗逻辑 (Compare Modal Logic) ----
-    const openCompareBtn = document.querySelector('.btn-compare-design');
     const compareModal = document.getElementById('compareModal');
     const closeCompareBtn = document.getElementById('closeCompareModalBtn');
     const compareBackdrop = document.getElementById('compareModalBackdrop');
-
-    function openCompareModal() {
-        if (compareModal && compareBackdrop) {
-            compareModal.classList.add('active');
-            compareBackdrop.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-    }
-
-    function closeCompareModal() {
-        if (compareModal && compareBackdrop) {
-            compareModal.classList.remove('active');
-            compareBackdrop.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-
-    if (openCompareBtn) openCompareBtn.addEventListener('click', openCompareModal);
-    if (closeCompareBtn) closeCompareBtn.addEventListener('click', closeCompareModal);
-    if (compareBackdrop) compareBackdrop.addEventListener('click', closeCompareModal);
 
     // ---- 机型比较：连续卡片轮播逻辑 ----
     const compareTabs = document.querySelectorAll('.compare-tab');
@@ -199,6 +178,40 @@ document.addEventListener('DOMContentLoaded', () => {
         if (prevBtn) prevBtn.disabled = currentCardIndex <= 0;
         if (nextBtn) nextBtn.disabled = currentCardIndex >= totalCards - 1;
     }
+
+    function openCompareModal(targetModule = 'design') {
+        if (compareModal && compareBackdrop) {
+            compareModal.classList.add('active');
+            compareBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // 跳转到目标模块的第一张卡片
+            const idx = getFirstIndexOfModule(targetModule);
+            setTimeout(() => {
+                scrollToCard(idx);
+            }, 50);
+        }
+    }
+
+    function closeCompareModal() {
+        if (compareModal && compareBackdrop) {
+            compareModal.classList.remove('active');
+            compareBackdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // 绑定所有比较按钮
+    const allCompareBtns = document.querySelectorAll('[data-compare-module]');
+    allCompareBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const module = btn.getAttribute('data-compare-module');
+            openCompareModal(module);
+        });
+    });
+
+    if (closeCompareBtn) closeCompareBtn.addEventListener('click', closeCompareModal);
+    if (compareBackdrop) compareBackdrop.addEventListener('click', closeCompareModal);
 
     // 箭头：逐卡切换
     if (prevBtn) {
