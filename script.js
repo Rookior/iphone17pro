@@ -1,0 +1,395 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // ---- 视频弹窗逻辑 (Video Modal Logic) ----
+    const playBtn = document.getElementById('playVideoBtn');
+    const videoModal = document.getElementById('videoModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const videoElement = document.getElementById('highlightsVideo');
+
+    function openModal() {
+        if (videoModal) {
+            videoModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+
+            if (videoElement) {
+                videoElement.play().catch(error => {
+                    console.log("Auto-play was prevented:", error);
+                });
+            }
+        }
+    }
+
+    function closeModal() {
+        if (videoModal) {
+            videoModal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢复滚动
+
+            if (videoElement) {
+                videoElement.pause();
+                videoElement.currentTime = 0;
+            }
+        }
+    }
+
+    if (playBtn) playBtn.addEventListener('click', openModal);
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+
+
+    // ---- 轮播图逻辑 (Carousel Logic) ----
+    const carouselTrack = document.getElementById('carouselTrack');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const playPauseBtn = document.getElementById('carouselPlayBtn');
+    const playPausePath = document.getElementById('playPausePath');
+    const indicatorsContainer = document.getElementById('carouselIndicators');
+
+    if (carouselTrack && slides.length > 0) {
+        const svgPlay = "M8,5 L19,12 L8,19 Z";
+        const svgPause = "M6,19 L10,19 L10,5 L6,5 Z M14,19 L18,19 L18,5 L14,5 Z";
+
+        let currentIndex = 0;
+        let autoPlayInterval = null;
+        let isPlaying = true; // 默认自动播放
+        const totalSlides = slides.length;
+
+        // 生成指示器 Dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.classList.add('carousel-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToSlide(i);
+                resetAutoPlay();
+            });
+            indicatorsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        function updateCarousel() {
+            // 计算位移：卡片宽度 + margin-right
+            const style = window.getComputedStyle(slides[0]);
+            const slideWidth = slides[0].offsetWidth + parseFloat(style.marginRight);
+            const transformValue = -(slideWidth * currentIndex);
+
+            carouselTrack.style.transform = `translateX(${transformValue}px)`;
+
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === currentIndex);
+                dots[idx].classList.toggle('active', idx === currentIndex);
+            });
+        }
+
+        function goToSlide(index) {
+            currentIndex = index;
+            if (currentIndex < 0) currentIndex = totalSlides - 1;
+            if (currentIndex >= totalSlides) currentIndex = 0;
+            updateCarousel();
+        }
+
+        function playCarousel() {
+            isPlaying = true;
+            if (playPausePath) playPausePath.setAttribute('d', svgPause);
+            autoPlayInterval = setInterval(() => {
+                goToSlide(currentIndex + 1);
+            }, 3000);
+        }
+
+        function pauseCarousel() {
+            isPlaying = false;
+            if (playPausePath) playPausePath.setAttribute('d', svgPlay);
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+            }
+        }
+
+        function resetAutoPlay() {
+            if (isPlaying) {
+                pauseCarousel();
+                playCarousel();
+            }
+        }
+
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                pauseCarousel();
+            } else {
+                playCarousel();
+            }
+        });
+
+        // 窗口缩放时重新计算宽度
+        window.addEventListener('resize', () => {
+            updateCarousel();
+        });
+
+        // 初始化
+        updateCarousel();
+        playCarousel();
+    }
+
+    // ---- 机型比较弹窗逻辑 (Compare Modal Logic) ----
+    const openCompareBtn = document.querySelector('.btn-compare-design');
+    const compareModal = document.getElementById('compareModal');
+    const closeCompareBtn = document.getElementById('closeCompareModalBtn');
+    const compareBackdrop = document.getElementById('compareModalBackdrop');
+
+    function openCompareModal() {
+        if (compareModal && compareBackdrop) {
+            compareModal.classList.add('active');
+            compareBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeCompareModal() {
+        if (compareModal && compareBackdrop) {
+            compareModal.classList.remove('active');
+            compareBackdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (openCompareBtn) openCompareBtn.addEventListener('click', openCompareModal);
+    if (closeCompareBtn) closeCompareBtn.addEventListener('click', closeCompareModal);
+    if (compareBackdrop) compareBackdrop.addEventListener('click', closeCompareModal);
+
+    // ---- 机型比较：连续卡片轮播逻辑 ----
+    const compareTabs = document.querySelectorAll('.compare-tab');
+    const allScrollers = document.querySelectorAll('.compare-modal .compare-cards-scroller');
+    const prevBtn = document.querySelector('.compare-modal .prev-btn');
+    const nextBtn = document.querySelector('.compare-modal .next-btn');
+
+    // 从第一个 scroller 读取卡片总数和 module 映射
+    const refScroller = allScrollers[0];
+    const allCards = refScroller ? refScroller.querySelectorAll('.compare-feature-card') : [];
+    const totalCards = allCards.length;
+    let currentCardIndex = 0;
+
+    // 获取某个 card index 对应的 module 名称
+    function getModuleAtIndex(index) {
+        if (!allCards[index]) return '';
+        return allCards[index].getAttribute('data-module') || '';
+    }
+
+    // 获取某个 module 的第一个 card index
+    function getFirstIndexOfModule(moduleName) {
+        for (let i = 0; i < totalCards; i++) {
+            if (getModuleAtIndex(i) === moduleName) return i;
+        }
+        return 0;
+    }
+
+    function scrollToCard(index) {
+        currentCardIndex = Math.max(0, Math.min(index, totalCards - 1));
+        allScrollers.forEach(scroller => {
+            const card = scroller.querySelector('.compare-feature-card');
+            if (!card) return;
+            const gap = 16;
+            const cardWidth = card.offsetWidth + gap;
+            scroller.scrollTo({ left: cardWidth * currentCardIndex, behavior: 'smooth' });
+        });
+        // 同步 Tab 高亮
+        const currentModule = getModuleAtIndex(currentCardIndex);
+        compareTabs.forEach(t => {
+            t.classList.toggle('active', t.getAttribute('data-tab-name') === currentModule);
+        });
+        // 更新按钮状态
+        if (prevBtn) prevBtn.disabled = currentCardIndex <= 0;
+        if (nextBtn) nextBtn.disabled = currentCardIndex >= totalCards - 1;
+    }
+
+    // 箭头：逐卡切换
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => scrollToCard(currentCardIndex - 1));
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => scrollToCard(currentCardIndex + 1));
+    }
+
+    // Tab 点击：跳到该模块的第一张卡片
+    compareTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const moduleName = tab.getAttribute('data-tab-name');
+            const idx = getFirstIndexOfModule(moduleName);
+            scrollToCard(idx);
+        });
+    });
+
+    // 初始化
+    scrollToCard(0);
+
+    // ---- 定睛细看：垂直探索器逻辑 ----
+    const hotspotItems = document.querySelectorAll('.hotspot-item');
+    const exploreImages = document.querySelectorAll('.explore-img');
+    const upBtn = document.querySelector('.explore-arrow-btn.up');
+    const downBtn = document.querySelector('.explore-arrow-btn.down');
+    const mobilePrevBtn = document.querySelector('.explore-mobile-btn.prev');
+    const mobileNextBtn = document.querySelector('.explore-mobile-btn.next');
+    const mobileLabels = document.querySelectorAll('.mobile-label');
+    let currentExploreIndex = 0;
+    const totalExploreItems = hotspotItems.length;
+
+    function updateExploreView(index) {
+        if (index < 0 || index >= totalExploreItems) return;
+        currentExploreIndex = index;
+
+        // 更新 Hotspots 状态
+        hotspotItems.forEach((item, i) => {
+            if (i === index) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+
+        // 更新图片状态
+        exploreImages.forEach((img, i) => {
+            if (i === index) {
+                img.classList.add('active');
+            } else {
+                img.classList.remove('active');
+            }
+        });
+
+        // 更新按钮状态
+        if (upBtn) upBtn.disabled = currentExploreIndex === 0;
+        if (downBtn) downBtn.disabled = currentExploreIndex === totalExploreItems - 1;
+
+        // 更新移动端按钮和标签
+        if (mobilePrevBtn) mobilePrevBtn.disabled = currentExploreIndex === 0;
+        if (mobileNextBtn) mobileNextBtn.disabled = currentExploreIndex === totalExploreItems - 1;
+
+        mobileLabels.forEach((label, i) => {
+            if (i === index) {
+                label.classList.add('active');
+            } else {
+                label.classList.remove('active');
+            }
+        });
+    }
+
+    // 绑定点击事件给每一个 Hotspot Item
+    hotspotItems.forEach((item, index) => {
+        item.onclick = (e) => {
+            updateExploreView(index);
+        };
+    });
+
+    if (upBtn) {
+        upBtn.onclick = () => {
+            if (currentExploreIndex > 0) {
+                updateExploreView(currentExploreIndex - 1);
+            }
+        };
+    }
+
+    if (downBtn) {
+        downBtn.onclick = () => {
+            if (currentExploreIndex < totalExploreItems - 1) {
+                updateExploreView(currentExploreIndex + 1);
+            }
+        };
+    }
+
+    // 移动端左右切换逻辑
+    if (mobilePrevBtn) {
+        mobilePrevBtn.addEventListener('click', () => {
+            if (currentExploreIndex > 0) {
+                updateExploreView(currentExploreIndex - 1);
+            }
+        });
+    }
+
+    if (mobileNextBtn) {
+        mobileNextBtn.addEventListener('click', () => {
+            if (currentExploreIndex < totalExploreItems - 1) {
+                updateExploreView(currentExploreIndex + 1);
+            }
+        });
+    }
+
+    mobileLabels.forEach((label) => {
+        label.addEventListener('click', () => {
+            const labelIndex = parseInt(label.getAttribute('data-index'));
+            if (!isNaN(labelIndex)) {
+                updateExploreView(labelIndex);
+            }
+        });
+    });
+
+    // 初始显示第一项
+    updateExploreView(0);
+
+    // ---- 性能视频：滚动触发播放逻辑 ----
+    const perfSection = document.getElementById('performanceHeroSection');
+    const perfVideo = document.getElementById('performanceVideo');
+    const perfImage = document.getElementById('performanceImage');
+
+    if (perfSection && perfVideo && perfImage) {
+        let perfVideoPlayed = false;
+
+        // 视频播放结束后，淡出视频，淡入图片
+        perfVideo.addEventListener('ended', () => {
+            perfVideo.classList.add('ended');
+            perfImage.classList.add('visible');
+        });
+
+        // 使用 IntersectionObserver 检测滚动到视口
+        const perfObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !perfVideoPlayed) {
+                    perfVideoPlayed = true;
+                    perfVideo.play().catch(() => {
+                        // 如果自动播放失败，直接显示图片
+                        perfVideo.classList.add('ended');
+                        perfImage.classList.add('visible');
+                    });
+                    perfObserver.disconnect();
+                }
+            });
+        }, {
+            threshold: 0.3 // 30% 可见时触发
+        });
+
+        perfObserver.observe(perfSection);
+    }
+
+    // ---- 设计视频：自动播放结束后显示图片 ----
+    const chassisVideo = document.querySelector('.chassis-video');
+    const chassisImage = document.querySelector('.chassis-image');
+
+    if (chassisVideo && chassisImage) {
+        // 视频播放结束后，隐藏视频并显示图片
+        chassisVideo.addEventListener('ended', () => {
+            chassisVideo.classList.add('hidden');
+            chassisImage.classList.add('visible');
+        });
+
+        // 如果视频无法自动播放，直接显示图片
+        chassisVideo.addEventListener('error', () => {
+            chassisVideo.style.display = 'none';
+            chassisImage.classList.add('visible');
+        });
+    }
+
+    // ---- 主图视频：自动播放结束后显示图片 ----
+    const heroVideo = document.querySelector('.hero-video');
+    const heroImage = document.querySelector('.hero-image');
+
+    if (heroVideo && heroImage) {
+        // 视频播放结束后，隐藏视频并显示图片
+        heroVideo.addEventListener('ended', () => {
+            heroVideo.classList.add('hidden');
+            heroImage.classList.add('visible');
+        });
+
+        // 如果视频无法自动播放，直接显示图片
+        heroVideo.addEventListener('error', () => {
+            heroVideo.style.display = 'none';
+            heroImage.classList.add('visible');
+        });
+    }
+
+});
