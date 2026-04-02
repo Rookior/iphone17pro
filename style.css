@@ -33,7 +33,7 @@ body {
 }
 
 .nav-content {
-    max-width: 1024px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 22px;
     height: 100%;
@@ -88,7 +88,7 @@ body {
 }
 
 .ribbon-content {
-    max-width: 1024px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 22px;
 }
@@ -163,7 +163,7 @@ body {
     opacity: 0;
     transform: translateY(-8px);
     transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
-    max-width: 1024px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 40px 22px 80px;
     display: flex;
@@ -307,7 +307,7 @@ body {
 }
 
 .highlights-content {
-    max-width: 1024px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 22px;
     display: flex;
@@ -380,7 +380,7 @@ body {
 .video-modal-content {
     position: relative;
     width: 90%;
-    max-width: 1024px;
+    max-width: 1400px;
     z-index: 10001;
     transform: scale(0.95);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -420,7 +420,7 @@ body {
 }
 
 /* Responsive close button */
-@media (max-width: 1100px) {
+@media (max-width: 768px) {
     .btn-close-modal {
         top: -48px;
         right: 0;
@@ -580,7 +580,7 @@ body {
 }
 
 /* Responsive constraints for smaller screens */
-@media (max-width: 1060px) {
+@media (max-width: 768px) {
     .carousel-track {
         padding-left: 5vw;
     }
@@ -672,7 +672,7 @@ body {
 }
 
 .performance-intro-section .section-description {
-    max-width: 720px;
+    max-width: 800px;
 }
 
 .performance-intro-section .section-description strong {
@@ -1097,7 +1097,7 @@ body {
 }
 
 .chip-features-content {
-    max-width: 1024px;
+    max-width: 1400px;
     width: 100%;
 }
 
@@ -1138,10 +1138,12 @@ body {
     line-height: 1.5;
     margin: 0;
     letter-spacing: 0.01em;
+    border-top: 1px solid rgb(66, 66, 69);
+    padding-top: 24px;
 }
 
 /* Responsive for chip features */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
     .chip-features-section {
         padding: 80px 22px;
     }
@@ -1165,7 +1167,7 @@ body {
 }
 
 .gaming-content {
-    max-width: 1024px;
+    max-width: 1400px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -1181,7 +1183,7 @@ body {
 
 .gaming-image {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
     height: auto;
     object-fit: contain;
 }
@@ -1208,7 +1210,7 @@ body {
     color: #86868b;
     text-align: center;
     line-height: 1.5;
-    max-width: 900px;
+    max-width: 800px;
     margin: 0;
     letter-spacing: 0.01em;
 }
@@ -1221,6 +1223,175 @@ body {
 
     .gaming-description {
         font-size: 17px;
+    }
+}
+
+/* Camera Section */
+.camera-section {
+    background-color: #000;
+    padding: 120px 22px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.camera-content {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.camera-kicker {
+    font-size: 19px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #ff9f0a, #ff375f);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 0 24px 0;
+    letter-spacing: 0.02em;
+}
+
+.camera-headline {
+    font-size: clamp(40px, 5.5vw, 68px);
+    font-weight: 700;
+    color: #f5f5f7;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+/* Responsive for camera section */
+@media (max-width: 768px) {
+    .camera-section {
+        padding: 80px 22px;
+    }
+}
+
+/* Camera Detail Section */
+.camera-detail-section {
+    background-color: #000;
+    padding: 0 22px 120px 22px;
+    display: flex;
+    justify-content: center;
+}
+
+.camera-detail-content {
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.camera-media-wrapper {
+    flex: 0 0 60%;
+    position: relative;
+}
+
+.camera-detail-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.camera-detail-video.ended {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.camera-detail-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.camera-detail-image.visible {
+    opacity: 1;
+}
+
+.camera-text-wrapper {
+    flex: 0 0 calc(40% - 60px);
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.camera-feature {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.camera-feature-label {
+    font-size: 17px;
+    font-weight: 500;
+    color: #86868b;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+
+.camera-feature-value {
+    font-size: 40px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ff9f0a, #ff375f);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.camera-feature-desc {
+    font-size: 17px;
+    font-weight: 500;
+    color: #86868b;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+
+/* Responsive for camera detail section */
+@media (max-width: 768px) {
+    .camera-detail-section {
+        padding: 0 22px 80px 22px;
+    }
+
+    .camera-detail-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .camera-media-wrapper {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .camera-text-wrapper {
+        flex: 0 0 auto;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .camera-feature {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .camera-feature-value {
+        font-size: 32px;
     }
 }
 
@@ -1257,8 +1428,8 @@ body {
 /* Explore Section (Vertical Scroller) */
 .explore-container {
     position: relative;
-    max-width: 100%;
-    margin: 60px 0 0 0;
+    max-width: 1400px;
+    margin: 60px auto 0;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -1443,7 +1614,7 @@ body {
    ============================================================ */
 
 /* Medium Devices (Tablets, small desktops) */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
 
     .nav-content,
     .ribbon-content,
@@ -1454,7 +1625,7 @@ body {
 }
 
 /* iPhone & Mobile Devices */
-@media (max-width: 734px) {
+@media (max-width: 768px) {
     .nav-item:not(.icon-link) {
         display: none;
     }
@@ -1687,5 +1858,367 @@ body {
         font-size: 14px;
         line-height: 1.5;
         color: #f5f5f7;
+    }
+}
+
+/* Camera Telephoto Intro Section */
+.camera-telephoto-intro-section {
+    background-color: #000;
+    padding: 100px 22px 120px 22px;
+    display: flex;
+    justify-content: center;
+}
+
+.camera-telephoto-content {
+    max-width: 800px;
+    width: 100%;
+}
+
+.camera-telephoto-text {
+    font-size: 24px;
+    font-weight: 600;
+    color: #86868b;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    margin: 0;
+    text-align: center;
+}
+
+.camera-telephoto-text .highlight {
+    color: #f5f5f7;
+    font-weight: 600;
+}
+
+/* Responsive for camera telephoto intro section */
+@media (max-width: 768px) {
+    .camera-telephoto-intro-section {
+        padding: 60px 22px 80px 22px;
+    }
+
+    .camera-telephoto-text {
+        font-size: 19px;
+        text-align: left;
+    }
+}
+
+/* Focal Length Section */
+.focal-length-section {
+    background-color: #000;
+    padding: 60px 22px 120px 22px;
+    display: flex;
+    justify-content: center;
+}
+
+.focal-length-content {
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.focal-image-wrapper {
+    width: 100%;
+    max-width: 1400px;
+    position: relative;
+    aspect-ratio: 4 / 3;
+}
+
+.focal-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.focal-image.active {
+    opacity: 1;
+}
+
+.focal-tabs-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 1400px;
+}
+
+.focal-nav-btn {
+    display: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.12);
+    border: none;
+    color: #f5f5f7;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.focal-nav-btn:hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.focal-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.focal-tabs-wrapper {
+    display: flex;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    padding: 6px;
+    overflow-x: auto;
+    max-width: 1400px;
+    scrollbar-width: none;
+}
+
+.focal-tabs-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.focal-tab {
+    background: none;
+    border: none;
+    color: rgba(245, 245, 247, 0.6);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.focal-tab:hover {
+    color: #f5f5f7;
+}
+
+.focal-tab.active {
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+}
+
+.focal-description-wrapper {
+    text-align: center;
+}
+
+.focal-description {
+    font-size: 21px;
+    font-weight: 700;
+    color: #f5f5f7;
+    margin: 0;
+    display: none;
+    letter-spacing: -0.01em;
+}
+
+.focal-description.active {
+    display: block;
+}
+
+/* Responsive for focal length section */
+@media (max-width: 768px) {
+    .focal-length-section {
+        padding: 40px 22px 80px 22px;
+    }
+
+    .focal-length-content {
+        gap: 30px;
+    }
+
+    .focal-tabs-container {
+        gap: 8px;
+    }
+
+    .focal-nav-btn {
+        display: flex;
+    }
+
+    .focal-tab {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .focal-description {
+        font-size: 17px;
+    }
+}
+
+/* Lens Video Section */
+.lens-video-section {
+    background-color: #000;
+    padding: 60px 22px 120px 22px;
+    display: flex;
+    justify-content: center;
+}
+
+.lens-video-content {
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.lens-video-text {
+    font-size: 21px;
+    font-weight: 600;
+    color: #86868b;
+    text-align: center;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+
+.lens-media-wrapper {
+    width: 100%;
+    max-width: 1400px;
+    position: relative;
+}
+
+.lens-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lens-video.ended {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.lens-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lens-image.visible {
+    opacity: 1;
+}
+
+.lens-cta {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-compare-camera {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #f5f5f7;
+    border: none;
+    border-radius: 99px;
+    padding: 6px 6px 6px 20px;
+    font-size: 14.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-compare-camera:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    transform: scale(1.02);
+}
+
+/* Responsive for lens video section */
+@media (max-width: 768px) {
+    .lens-video-section {
+        padding: 40px 22px 80px 22px;
+    }
+
+    .lens-video-text {
+        font-size: 17px;
+    }
+
+    .lens-video-content {
+        gap: 30px;
+    }
+}
+
+/* Camera Features Section */
+.camera-features-section {
+    background-color: #000;
+    padding: 120px 22px;
+    display: flex;
+    justify-content: center;
+}
+
+.camera-features-content {
+    max-width: 1400px;
+    width: 100%;
+}
+
+.camera-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.camera-feature-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.camera-feature-title {
+    font-size: 21px;
+    font-weight: 600;
+    color: #f5f5f7;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+
+.camera-feature-spec {
+    font-size: 17px;
+    font-weight: 400;
+    color: #86868b;
+    line-height: 1.5;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+
+.camera-feature-spec:first-of-type {
+    border-top: 1px solid rgb(66, 66, 69);
+    padding-top: 24px;
+}
+
+/* Responsive for camera features */
+@media (max-width: 768px) {
+    .camera-features-section {
+        padding: 80px 22px;
+    }
+
+    .camera-features-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .camera-feature-card {
+        text-align: center;
     }
 }

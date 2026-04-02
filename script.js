@@ -405,4 +405,144 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ---- 摄像头视频：自动播放结束后显示图片 ----
+    const cameraSection = document.querySelector('.camera-detail-section');
+    const cameraVideo = document.getElementById('cameraDetailVideo');
+    const cameraImage = document.getElementById('cameraDetailImage');
+
+    if (cameraSection && cameraVideo && cameraImage) {
+        let cameraVideoPlayed = false;
+
+        cameraVideo.addEventListener('ended', () => {
+            cameraVideo.classList.add('ended');
+            cameraImage.classList.add('visible');
+        });
+
+        const cameraObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !cameraVideoPlayed) {
+                    cameraVideoPlayed = true;
+                    cameraVideo.play().catch(() => {
+                        cameraVideo.classList.add('ended');
+                        cameraImage.classList.add('visible');
+                    });
+                    cameraObserver.disconnect();
+                }
+            });
+        }, {
+            threshold: 0.3
+        });
+
+        cameraObserver.observe(cameraSection);
+    }
+
+    // ---- 焦距选项卡切换逻辑 ----
+    const focalTabs = document.querySelectorAll('.focal-tab');
+    const focalImages = document.querySelectorAll('.focal-image');
+    const focalDescriptions = document.querySelectorAll('.focal-description');
+    const focalNavPrev = document.getElementById('focalNavPrev');
+    const focalNavNext = document.getElementById('focalNavNext');
+
+    if (focalTabs.length > 0) {
+        let currentFocalIndex = 0;
+        const totalFocalTabs = focalTabs.length;
+
+        function setActiveFocal(focalValue, index, skipScroll = false) {
+            currentFocalIndex = index !== undefined ? index : currentFocalIndex;
+
+            // 更新选项卡状态
+            focalTabs.forEach(tab => {
+                tab.classList.toggle('active', tab.getAttribute('data-focal') === focalValue);
+            });
+
+            // 更新图片状态
+            focalImages.forEach(img => {
+                img.classList.toggle('active', img.getAttribute('data-focal') === focalValue);
+            });
+
+            // 更新描述状态
+            focalDescriptions.forEach(desc => {
+                desc.classList.toggle('active', desc.getAttribute('data-focal') === focalValue);
+            });
+
+            // 更新导航按钮状态
+            if (focalNavPrev) focalNavPrev.disabled = currentFocalIndex === 0;
+            if (focalNavNext) focalNavNext.disabled = currentFocalIndex === totalFocalTabs - 1;
+
+            // 滚动高亮选项卡到可视区域（初始化时跳过）
+            if (!skipScroll) {
+                const activeTab = focalTabs[currentFocalIndex];
+                if (activeTab) {
+                    activeTab.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest',
+                        inline: 'center'
+                    });
+                }
+            }
+        }
+
+        function goToFocalIndex(index) {
+            if (index < 0 || index >= totalFocalTabs) return;
+            const focalValue = focalTabs[index].getAttribute('data-focal');
+            setActiveFocal(focalValue, index);
+        }
+
+        // 绑定选项卡点击事件
+        focalTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const focalValue = tab.getAttribute('data-focal');
+                const index = parseInt(tab.getAttribute('data-index'));
+                setActiveFocal(focalValue, index);
+            });
+        });
+
+        // 绑定导航按钮事件
+        if (focalNavPrev) {
+            focalNavPrev.addEventListener('click', () => {
+                goToFocalIndex(currentFocalIndex - 1);
+            });
+        }
+
+        if (focalNavNext) {
+            focalNavNext.addEventListener('click', () => {
+                goToFocalIndex(currentFocalIndex + 1);
+            });
+        }
+
+        // 初始化
+        setActiveFocal(focalTabs[0].getAttribute('data-focal'), 0, true);
+    }
+
+    // ---- 镜头视频：自动播放结束后显示图片 ----
+    const lensSection = document.querySelector('.lens-video-section');
+    const lensVideo = document.getElementById('lensVideo');
+    const lensImage = document.getElementById('lensImage');
+
+    if (lensSection && lensVideo && lensImage) {
+        let lensVideoPlayed = false;
+
+        lensVideo.addEventListener('ended', () => {
+            lensVideo.classList.add('ended');
+            lensImage.classList.add('visible');
+        });
+
+        const lensObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !lensVideoPlayed) {
+                    lensVideoPlayed = true;
+                    lensVideo.play().catch(() => {
+                        lensVideo.classList.add('ended');
+                        lensImage.classList.add('visible');
+                    });
+                    lensObserver.disconnect();
+                }
+            });
+        }, {
+            threshold: 0.3
+        });
+
+        lensObserver.observe(lensSection);
+    }
+
 });

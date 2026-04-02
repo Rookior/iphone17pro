@@ -654,6 +654,146 @@
             </div>
         </section>
 
+        <!-- Camera Section -->
+        <section class="camera-section">
+            <div class="camera-content">
+                <h3 class="camera-kicker">摄像头</h3>
+                <h2 class="camera-headline">变焦，大幅推进。</h2>
+            </div>
+        </section>
+
+        <!-- Camera Detail Section -->
+        <section class="camera-detail-section">
+            <div class="camera-detail-content">
+                <div class="camera-media-wrapper">
+                    <video class="camera-detail-video" id="cameraDetailVideo" muted playsinline preload="auto">
+                        <source src="video/摄像头/xlarge_2x.mp4" type="video/mp4">
+                    </video>
+                    <img src="img/摄像头/camera_hero_endframe__bj7hg5poypn6_xlarge.jpg" alt="iPhone 17 Pro 摄像头"
+                        class="camera-detail-image" id="cameraDetailImage">
+                </div>
+                <div class="camera-text-wrapper">
+                    <div class="camera-feature">
+                        <p class="camera-feature-label">最高达</p>
+                        <p class="camera-feature-value">8 倍</p>
+                        <p class="camera-feature-desc">光学品质变焦</p>
+                    </div>
+                    <div class="camera-feature">
+                        <p class="camera-feature-label">全部</p>
+                        <p class="camera-feature-value">4800 万像素</p>
+                        <p class="camera-feature-desc">后置摄像头</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Camera Telephoto Intro Section -->
+        <section class="camera-telephoto-intro-section">
+            <div class="camera-telephoto-content">
+                <p class="camera-telephoto-text">
+                    深入 iPhone 17 Pro 的拍摄系统，处处可见淋漓尽致的创新。尤其是新的长焦镜头，采用我们新一代的
+                    四重反射棱镜设计，并搭载增大 56% 的传感器。从而实现最大达
+                    200 毫米的等效焦距，即 8 倍的光学品质变焦，这是
+                    <span class="highlight">iPhone 迄今最长的长焦</span>，整个光学变焦范围达到了 16 倍。给你更长远的构图视野，
+                    带你探索更宽广的创意表现。
+                </p>
+            </div>
+        </section>
+
+        <!-- Focal Length Tabs Section -->
+        <section class="focal-length-section">
+            <div class="focal-length-content">
+                <div class="focal-image-wrapper">
+                    <img src="img/焦距/200mm__b8j6610sgpma_large_2x.webp" alt="200毫米" class="focal-image active" data-focal="200mm">
+                    <img src="img/焦距/100mm__b0gky74liqb6_large_2x.webp" alt="100毫米" class="focal-image" data-focal="100mm">
+                    <img src="img/焦距/48mm__bcnb2zqpydr6_large_2x.webp" alt="48毫米" class="focal-image" data-focal="48mm">
+                    <img src="img/焦距/35mm__gcr9ng5exueu_large_2x.webp" alt="35毫米" class="focal-image" data-focal="35mm">
+                    <img src="img/焦距/28mm__gg1nbwfultui_large_2x.webp" alt="28毫米" class="focal-image" data-focal="28mm">
+                    <img src="img/焦距/24mm__eyyrr19ky7ee_large_2x.webp" alt="24毫米" class="focal-image" data-focal="24mm">
+                    <img src="img/焦距/13mm__cn8a4mew7a2q_large_2x.webp" alt="13毫米" class="focal-image" data-focal="13mm">
+                    <img src="img/焦距/macro__ev0r6s4jrbwy_large_2x.webp" alt="微距" class="focal-image" data-focal="macro">
+                </div>
+
+                <div class="focal-tabs-container">
+                    <button class="focal-nav-btn focal-nav-prev" id="focalNavPrev" aria-label="上一个">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+                        </svg>
+                    </button>
+                    <div class="focal-tabs-wrapper">
+                        <button class="focal-tab active" data-focal="200mm" data-index="0">200 毫米</button>
+                        <button class="focal-tab" data-focal="100mm" data-index="1">100 毫米</button>
+                        <button class="focal-tab" data-focal="48mm" data-index="2">48 毫米</button>
+                        <button class="focal-tab" data-focal="35mm" data-index="3">35 毫米</button>
+                        <button class="focal-tab" data-focal="28mm" data-index="4">28 毫米</button>
+                        <button class="focal-tab" data-focal="24mm" data-index="5">24 毫米</button>
+                        <button class="focal-tab" data-focal="13mm" data-index="6">13 毫米</button>
+                        <button class="focal-tab" data-focal="macro" data-index="7">微距</button>
+                    </div>
+                    <button class="focal-nav-btn focal-nav-next" id="focalNavNext" aria-label="下一个">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="focal-description-wrapper">
+                    <p class="focal-description active" data-focal="200mm">8 倍</p>
+                    <p class="focal-description" data-focal="100mm">4 倍</p>
+                    <p class="focal-description" data-focal="48mm">2 倍</p>
+                    <p class="focal-description" data-focal="35mm">1.5 倍</p>
+                    <p class="focal-description" data-focal="28mm">1 倍</p>
+                    <p class="focal-description" data-focal="24mm">0.9 倍</p>
+                    <p class="focal-description" data-focal="13mm">0.5 倍</p>
+                    <p class="focal-description" data-focal="macro">微距</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lens Video Section -->
+        <section class="lens-video-section">
+            <div class="lens-video-content">
+                <p class="lens-video-text">
+                    好比 8 个专业镜头随身带。支持超高分辨率，默认拍摄 2400 万像素照片。
+                </p>
+                <div class="lens-media-wrapper">
+                    <video class="lens-video" id="lensVideo" muted playsinline preload="auto">
+                        <source src="video/镜头/xlarge_2x.mp4" type="video/mp4">
+                    </video>
+                    <img src="img/镜头/pro_camera_system_v02_statics_endframe__fdbmrfy1xsuy_xlarge.jpg" alt="专业镜头系统"
+                        class="lens-image" id="lensImage">
+                </div>
+            </div>
+        </section>
+
+        <!-- Camera Features Section -->
+        <section class="camera-features-section">
+            <div class="camera-features-content">
+                <div class="camera-features-grid">
+                    <div class="camera-feature-card">
+                        <h3 class="camera-feature-title">4800 万像素融合式主摄</h3>
+                        <p class="camera-feature-spec">24/48 毫米焦距 (1 倍/2 倍)</p>
+                        <p class="camera-feature-spec">ƒ/1.78 光圈</p>
+                        <p class="camera-feature-spec">2.44 微米四合一像素 (单个像素 1.22 微米)</p>
+                    </div>
+                    <div class="camera-feature-card">
+                        <h3 class="camera-feature-title">4800 万像素融合式超广角摄像头</h3>
+                        <p class="camera-feature-spec">13 毫米焦距 (0.5 倍/微距)</p>
+                        <p class="camera-feature-spec">ƒ/2.2 光圈</p>
+                        <p class="camera-feature-spec">1.4 微米四合一像素 (单个像素 0.7 微米)</p>
+                    </div>
+                    <div class="camera-feature-card">
+                        <h3 class="camera-feature-title">4800 万像素融合式长焦摄像头</h3>
+                        <p class="camera-feature-spec">100/200 毫米焦距 (4 倍/8 倍)</p>
+                        <p class="camera-feature-spec">ƒ/2.8 光圈</p>
+                        <p class="camera-feature-spec">1.4 微米四合一像素 (单个像素 0.7 微米)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
     </main>
 
     <script src="script.js"></script>
