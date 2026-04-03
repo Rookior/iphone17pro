@@ -894,8 +894,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }, 350);
 
+
             customSelectWrapper.classList.remove('open');
         });
     });
 
+    // ---- 必备功能：滚动缩放逻辑 (Essential Features Scroll Effect) ----
+    const essentialSection = document.getElementById('essentialFeaturesSection');
+    const essentialContainer = document.getElementById('essentialImagesContainer');
+
+    if (essentialSection && essentialContainer) {
+        let essentialTicking = false;
+
+        // 使用 IntersectionObserver 触发外观动画
+        const essentialObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    essentialSection.classList.add('revealed');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        essentialObserver.observe(essentialSection);
+
+        window.addEventListener('scroll', () => {
+            if (!essentialTicking) {
+                requestAnimationFrame(() => {
+                    const rect = essentialSection.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+
+                    // 当 section 在视口内时计算缩放
+                    if (rect.top < windowHeight && rect.bottom > 0) {
+                        // 计算滚动进度: 0 (完全在视口下方) 到 1 (完全在视口上方)
+                        const totalRange = windowHeight + rect.height;
+                        const scrollProgress = (windowHeight - rect.top) / totalRange;
+
+                        // "逐渐缩小"：从刚进入(scale大) 到 向上滚动消失(scale小)
+                        // 使用用户提供的矩阵参考 scale: 1.00559
+                        // 动态范围：1.15 到 1.00559
+                        const maxScale = 1.15;
+                        const minScale = 1.00559;
+                        const range = maxScale - minScale;
+
+                        const currentScale = maxScale - (scrollProgress * range);
+
+                        // 微调位置，增加漂浮感
+                        const translateY = (1 - scrollProgress) * 15;
+
+                        essentialContainer.style.transform = `matrix(${currentScale}, 0, 0, currentScale, 0, ${translateY})`;
+                    }
+                    essentialTicking = false;
+                });
+                essentialTicking = true;
+            }
+        }, { passive: true });
+    }
+
 });
+
