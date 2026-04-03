@@ -3425,8 +3425,9 @@ body {
     /* Bottom alignment */
     gap: -40px;
     margin-bottom: 80px;
-    max-width: 1400px;
-    width: 100%;
+    max-width: 800px;
+    /* Reduced to look more compact on PC */
+    width: 90%;
     position: relative;
     z-index: 1;
     will-change: transform;
@@ -3466,8 +3467,11 @@ body {
 
 .essential-img {
     width: 100%;
+    max-height: 65vh;
+    /* Limit height to 65% of viewport to prevent being too tall */
     height: auto;
     object-fit: contain;
+    display: block;
 }
 
 /* Scroll-triggered reveal state */
@@ -3503,5 +3507,186 @@ body {
 
     .essential-image-wrapper {
         width: 32%;
+    }
+
+    .essential-features-section.revealed .essential-image-wrapper.middle {
+        transform: scale(1.2);
+        /* Emphasize middle on mobile */
+    }
+}
+
+/* iOS 26 Carousel Section */
+.ios-carousel-section {
+    background-color: #000;
+    padding: 120px 0;
+    overflow: hidden;
+    color: #fff;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ios-carousel-header {
+    max-width: 1400px;
+    margin: 0 auto 80px;
+    padding: 0 40px;
+}
+
+.ios-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.ios-headline {
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1.07143;
+    letter-spacing: -0.005em;
+    margin: 0;
+}
+
+.ios-learn-more {
+    color: #2997ff;
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    transition: opacity 0.3s;
+}
+
+.ios-learn-more:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+.ios-carousel-outer {
+    width: 100%;
+    overflow: visible;
+    padding-left: max(40px, calc(50vw - 700px + 40px));
+}
+
+.ios-carousel-track {
+    display: flex;
+    gap: 30px;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+.ios-carousel-slide {
+    flex: 0 0 400px;
+    /* Width that allows seeing 2+ cards */
+    transition: opacity 0.6s ease;
+}
+
+.ios-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.ios-card {
+    background-color: #1d1d1f;
+    border-radius: 32px;
+    width: 100%;
+    aspect-ratio: 1 / 1.1;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.ios-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.ios-card-desc {
+    font-size: 14px;
+    color: #86868b;
+    line-height: 1.47059;
+    letter-spacing: -0.022em;
+    font-weight: 500;
+    margin: 0;
+    max-width: 90%;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.ios-carousel-slide.active .ios-card-desc {
+    opacity: 1;
+}
+
+.ios-card-desc strong {
+    color: #f5f5f7;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.ios-carousel-controls {
+    max-width: 1400px;
+    margin: 60px auto 0;
+    padding: 0 40px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.ios-nav-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ios-nav-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.ios-nav-btn:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+
+@media (max-width: 768px) {
+    .ios-carousel-section {
+        padding: 80px 0;
+    }
+
+    .ios-headline {
+        font-size: 32px;
+    }
+
+    .ios-carousel-outer {
+        padding-left: 20px;
+    }
+
+    .ios-carousel-slide {
+        flex: 0 0 280px;
+    }
+
+    .ios-header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .ios-learn-more {
+        font-size: 17px;
+    }
+
+    .ios-carousel-track {
+        gap: 20px;
     }
 }

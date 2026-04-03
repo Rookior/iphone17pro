@@ -930,8 +930,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         const scrollProgress = (windowHeight - rect.top) / totalRange;
 
                         // "逐渐缩小"：从刚进入(scale大) 到 向上滚动消失(scale小)
-                        // 使用用户提供的矩阵参考 scale: 1.00559
-                        // 动态范围：1.15 到 1.00559
                         const maxScale = 1.15;
                         const minScale = 1.00559;
                         const range = maxScale - minScale;
@@ -942,6 +940,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         const translateY = (1 - scrollProgress) * 15;
 
                         essentialContainer.style.transform = `matrix(${currentScale}, 0, 0, currentScale, 0, ${translateY})`;
+
+                        // --- 优化：侧边图片向中间靠近及高度对齐 ---
+                        const leftWrapper = essentialContainer.querySelector('.left');
+                        const rightWrapper = essentialContainer.querySelector('.right');
+                        // const middleWrapper = essentialContainer.querySelector('.middle');
+
+                        // 1. 中间图：移除 scale 效果，按用户要求保持默认对齐高度
+                        // 2. 避免遮挡：初始状态设定为向外离远一点 (-25px)，随着滚动逐渐合拢到 0
+                        const sideOffset = -25 * (1 - scrollProgress);
+
+                        if (leftWrapper) leftWrapper.style.transform = `translateX(${sideOffset}px) scale(1)`;
+                        if (rightWrapper) rightWrapper.style.transform = `translateX(${-sideOffset}px) scale(1)`;
+                        // if (middleWrapper) middleWrapper.style.transform = `none`;
                     }
                     essentialTicking = false;
                 });
@@ -950,5 +961,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
+    // ---- iOS 26 奇妙模块轮播逻辑 (iOS 26 Carousel Logic) ----
+    const iosCarouselTrack = document.getElementById('iosCarouselTrack');
+    const iosSlides = document.querySelectorAll('.ios-carousel-slide');
+    const iosPrevBtn = document.getElementById('iosCarouselPrev');
+    const iosNextBtn = document.getElementById('iosCarouselNext');
+
+    if (iosCarouselTrack && iosSlides.length > 0) {
+        let currentIosIndex = 0;
+        const totalIosSlides = iosSlides.length;
+
+        function updateIosCarousel() {
+            const isMobile = window.innerWidth <= 768;
+            const gap = isMobile ? 20 : 30;
+            const slideWidth = iosSlides[0].offsetWidth + gap;
+
+            // 基础位移：左对齐滑动
+            const transformValue = -(currentIosIndex * slideWidth);
+            iosCarouselTrack.style.transform = `translateX(${transformValue}px)`;
+
+            // 更新按钮状态
+            if (iosPrevBtn) iosPrevBtn.disabled = currentIosIndex === 0;
+            if (iosNextBtn) {
+                // 如果剩余空间不足以显示更多卡片则禁用
+                const containerWidth = iosCarouselTrack.parentElement.offsetWidth;
+                const visibleCount = Math.floor(containerWidth / slideWidth);
+                iosNextBtn.disabled = currentIosIndex >= totalIosSlides - visibleCount;
+            }
+        }
+
+        if (iosPrevBtn) {
+            iosPrevBtn.addEventListener('click', () => {
+                currentIosIndex = Math.max(0, currentIosIndex - 1);
+                updateIosCarousel();
+            });
+        }
+
+        if (iosNextBtn) {
+            iosNextBtn.addEventListener('click', () => {
+                currentIosIndex = Math.min(totalIosSlides - 1, currentIosIndex + 1);
+                updateIosCarousel();
+            });
+        }
+
+        // 初始化
+        setTimeout(updateIosCarousel, 100);
+        window.addEventListener('resize', updateIosCarousel);
+    }
+
 });
+
 
