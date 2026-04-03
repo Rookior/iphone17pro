@@ -1337,6 +1337,114 @@
             </div>
         </section>
 
+        <!-- Upgrade Worth Section (升级值不值) -->
+        <section class="upgrade-section">
+            <div class="upgrade-container">
+                <div class="upgrade-top">
+                    <div class="upgrade-headline-wrapper">
+                        <h2 class="upgrade-headline">升级值不值？<br>百分百值。</h2>
+                    </div>
+                    <div class="upgrade-selector-wrapper">
+                        <p class="upgrade-selector-label">将 iPhone 17 Pro<br>与下列 iPhone 比比看：</p>
+                        <div class="upgrade-select-box" id="upgradeSelectWrapper">
+                            <div class="upgrade-select-trigger" id="upgradeSelectTrigger">
+                                <span id="upgradeSelectedText">iPhone 13</span>
+                                <svg viewBox="0 0 24 24" width="18" height="18">
+                                    <path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6-6-6z" />
+                                </svg>
+                            </div>
+                            <div class="upgrade-options" id="upgradeOptions">
+                                <div class="upgrade-option selected" data-value="iphone13" data-battery="增加<br>18 小时"
+                                    data-gpu="提速至<br>2.5 倍" data-title1="锻造铝金属<br>一体成型机身"
+                                    data-title2="iPhone 17 Pro Max<br>视频播放最长²" data-title3="后摄全上 4800 万像素<br>相机控制功能"
+                                    data-title4="图形处理器性能最高" data-title5="1800 万像素<br>Center Stage 前置<br>摄像头"
+                                    data-title6="Pro 级显示屏<br>支持 ProMotion 技术<br>自适应刷新率最高达<br>120Hz">iPhone 13</div>
+                                <div class="upgrade-option" data-value="iphone14" data-battery="增加<br>14 小时"
+                                    data-gpu="提速至<br>2.0 倍" data-title1="锻造铝金属<br>一体闭合设计"
+                                    data-title2="iPhone 17 Pro Max<br>续航王中王" data-title3="后置 48MP 三摄<br>全线进阶"
+                                    data-title4="A19 Pro 旗舰核心" data-title5="18MP 高清<br>前置镜头"
+                                    data-title6="ProMotion 智能面板<br>丝滑极速">iPhone 14</div>
+                                <div class="upgrade-option" data-value="iphone15" data-battery="增加<br>8 小时"
+                                    data-gpu="提速至<br>1.5 倍" data-title1="全系钛金属外观<br>工艺巅峰"
+                                    data-title2="iPhone 17 Pro Max<br>电力十足" data-title3="潜望式镜头<br>画质大片"
+                                    data-title4="神经网络核心提速" data-title5="超清视野<br>由我掌握" data-title6="自适应刷新率<br>超轻薄表现">
+                                    iPhone 15</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="upgrade-subtitle"><strong>iPhone 17 Pro</strong> <span
+                        class="highlight-text">优点众多，给你精彩更多。</span></p>
+
+                <div class="upgrade-grid">
+                    <!-- Card 1: Design -->
+                    <div class="upgrade-card">
+                        <p class="upgrade-card-title" id="upgradeTitle1">锻造铝金属<br>一体成型机身</p>
+                        <div class="upgrade-card-img-wrapper">
+                            <img src="img/定睛细看/viewer_aluminum_startframe__gj3hxocmxvu6_large.jpg" alt="锻造铝金属一体成型机身"
+                                class="upgrade-card-img">
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Battery (Text Stat) -->
+                    <div class="upgrade-card upgrade-card-stat">
+                        <p class="upgrade-card-title" id="upgradeTitle2">iPhone 17 Pro Max<br>视频播放最长²</p>
+                        <p class="upgrade-stat-value" id="upgradeBatteryVal">增加<br>18 小时</p>
+                        <div class="upgrade-battery-icon">
+                            <svg viewBox="0 0 40 20" width="50" height="25">
+                                <rect x="1" y="1" width="34" height="18" rx="3" fill="none" stroke="#4cd964"
+                                    stroke-width="1.5" />
+                                <rect x="35" y="6" width="4" height="8" rx="1.5" fill="#4cd964" />
+                                <rect x="3" y="3" width="30" height="14" rx="2" fill="#4cd964" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Camera -->
+                    <div class="upgrade-card">
+                        <p class="upgrade-card-title" id="upgradeTitle3">后摄全上 4800 万像素<br>相机控制功能</p>
+                        <div class="upgrade-card-img-wrapper">
+                            <img src="img/先刷重点/highlights_camera_endframe__e72sxwhaxhyu_large_2x.jpg"
+                                alt="后摄全上 4800 万像素" class="upgrade-card-img">
+                        </div>
+                    </div>
+
+                    <!-- Card 4: GPU (Text Stat) -->
+                    <div class="upgrade-card upgrade-card-stat">
+                        <p class="upgrade-card-title" id="upgradeTitle4">图形处理器性能最高</p>
+                        <p class="upgrade-stat-value" id="upgradeGpuVal">提速至<br>2.5 倍</p>
+                    </div>
+
+                    <!-- Card 5: Front Camera -->
+                    <div class="upgrade-card">
+                        <p class="upgrade-card-title" id="upgradeTitle5">1800 万像素<br>Center Stage 前置<br>摄像头</p>
+                        <div class="upgrade-card-img-wrapper">
+                            <img src="img/出片/48mp__tuwanegt2r6u_large.jpg" alt="Center Stage 前置摄像头"
+                                class="upgrade-card-img">
+                        </div>
+                    </div>
+
+                    <!-- Card 6: Display -->
+                    <div class="upgrade-card">
+                        <p class="upgrade-card-title" id="upgradeTitle6">Pro 级显示屏<br>支持 ProMotion
+                            技术<br>自适应刷新率最高达<br>120Hz</p>
+                        <div class="upgrade-card-img-wrapper">
+                            <img src="img/定睛细看/pro_display__bvu4xbhsdpf6_large.webp" alt="Pro 级显示屏"
+                                class="upgrade-card-img">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trade In -->
+                <div class="trade-in-wrapper">
+                    <h3 class="trade-in-headline">Trade In 换购计划</h3>
+                    <p class="trade-in-desc">用符合条件的设备换购新 iPhone，可享折抵优惠*。</p>
+                    <!-- <a href="#" class="trade-in-link">了解你设备的折抵金额 ›</a> -->
+                </div>
+            </div>
+        </section>
+
         <!-- Accessories Section (配件) -->
         <section class="accessories-section">
             <div class="accessories-container">

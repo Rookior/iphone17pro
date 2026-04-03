@@ -1023,6 +1023,48 @@ document.addEventListener('DOMContentLoaded', () => {
         safetyObserver.observe(safetySection);
     }
 
+    // ---- 升级值不值 Dropdown ----
+    const upgradeSelectBox = document.getElementById('upgradeSelectWrapper');
+    const upgradeSelectTrigger = document.getElementById('upgradeSelectTrigger');
+    const upgradeSelectedText = document.getElementById('upgradeSelectedText');
+    const upgradeOptions = document.querySelectorAll('.upgrade-option');
+
+    if (upgradeSelectTrigger && upgradeSelectBox) {
+        upgradeSelectTrigger.addEventListener('click', () => {
+            upgradeSelectBox.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!upgradeSelectBox.contains(e.target)) {
+                upgradeSelectBox.classList.remove('open');
+            }
+        });
+
+        upgradeOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                upgradeSelectedText.textContent = opt.textContent;
+                upgradeOptions.forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                upgradeSelectBox.classList.remove('open');
+
+                // Update Stats
+                const batteryEl = document.getElementById('upgradeBatteryVal');
+                const gpuEl = document.getElementById('upgradeGpuVal');
+                if (batteryEl && opt.dataset.battery) batteryEl.innerHTML = opt.dataset.battery;
+                if (gpuEl && opt.dataset.gpu) gpuEl.innerHTML = opt.dataset.gpu;
+
+                // Update Titles
+                for (let i = 1; i <= 6; i++) {
+                    const titleEl = document.getElementById(`upgradeTitle${i}`);
+                    const attrName = `title${i}`;
+                    if (titleEl && opt.dataset[attrName]) {
+                        titleEl.innerHTML = opt.dataset[attrName];
+                    }
+                }
+            });
+        });
+    }
+
 });
 
 
