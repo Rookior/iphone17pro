@@ -3789,3 +3789,140 @@ body {
         gap: 40px;
     }
 }
+
+/* Accessories Section (配件) */
+.accessories-section {
+    background-color: #000;
+    padding: 120px 0;
+    color: #fff;
+}
+
+.accessories-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.accessories-header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.accessories-label {
+    display: block;
+    color: #f56300;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.accessories-headline {
+    font-size: 80px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0 0 40px 0;
+}
+
+.accessories-link {
+    font-size: 21px;
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.accessories-link:hover {
+    text-decoration: underline;
+}
+
+.accessories-link .arrow {
+    margin-left: 4px;
+}
+
+.accessories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 80px;
+}
+
+.accessory-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.accessory-card {
+    background: #161617;
+    border-radius: 40px;
+    overflow: hidden;
+    aspect-ratio: 0.85 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.accessory-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.accessory-card:hover .accessory-img {
+    transform: scale(1.03);
+}
+
+.accessory-content {
+    padding: 0 10px;
+}
+
+.accessory-desc {
+    font-size: 14px;
+    line-height: 1.47059;
+    color: #86868b;
+    margin: 0;
+}
+
+.accessory-desc strong {
+    color: #f5f5f7;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+@media (max-width: 1068px) {
+    .accessories-headline {
+        font-size: 64px;
+    }
+}
+
+@media (max-width: 768px) {
+    .accessories-section {
+        padding: 80px 0;
+    }
+
+    .accessories-container {
+        padding: 0 20px;
+    }
+
+    .accessories-headline {
+        font-size: 40px;
+    }
+
+    .accessories-grid {
+        grid-template-columns: 1fr;
+        gap: 64px;
+    }
+
+    .accessory-card {
+        aspect-ratio: 1 / 1;
+        padding: 20px;
+    }
+
+    .accessory-desc {
+        font-size: 14px;
+    }
+}
