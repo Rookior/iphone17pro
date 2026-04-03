@@ -1009,6 +1009,20 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', updateIosCarousel);
     }
 
+    // ---- 有备无患 (Safety Features) 显现动效 ----
+    const safetySection = document.querySelector('.safety-features-section');
+    if (safetySection) {
+        const safetyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    safetySection.classList.add('revealed');
+                    safetyObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        safetyObserver.observe(safetySection);
+    }
+
 });
 
 
