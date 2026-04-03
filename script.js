@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
             compareModal.classList.add('active');
             compareBackdrop.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
+
             // 跳转到目标模块的第一张卡片
             const idx = getFirstIndexOfModule(targetModule);
             setTimeout(() => {
@@ -561,7 +561,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const slideWidth = photoSlides[0].offsetWidth + gap;
             const transformValue = -(currentPhotoIndex * slideWidth) + (photoCarouselTrack.parentElement.offsetWidth / 2 - slideWidth / 2);
             photoCarouselTrack.style.transform = `translateX(${transformValue}px)`;
-            
+
             photoSlides.forEach((slide, index) => {
                 slide.classList.toggle('active', index === currentPhotoIndex);
             });
@@ -614,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cameraTabVideos.forEach((video, i) => {
                 if (i === index) {
                     video.currentTime = 0;
-                    video.play().catch(() => {});
+                    video.play().catch(() => { });
                 } else {
                     video.pause();
                 }
@@ -629,5 +629,273 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switchToCameraTab(0);
     }
+
+    // ---- Pro 视频滚动交互逻辑 ----
+    const proVideoSection = document.getElementById('proVideoSection');
+    const proVideo = document.getElementById('proVideo');
+    const proVideoWrapper = document.getElementById('proVideoWrapper');
+    const proVideoEndframe = document.getElementById('proVideoEndframe');
+    const proVideoOverlayText = document.getElementById('proVideoOverlayText');
+    const proVideoSticky = document.getElementById('proVideoSticky');
+
+    if (proVideoSection && proVideo && proVideoWrapper && proVideoEndframe) {
+        let proVideoPlayed = false;
+        let proVideoEnded = false;
+        let proVideoTicking = false;
+
+        // 视频播放结束后，淡出视频，淡入结束帧图片
+        proVideo.addEventListener('ended', () => {
+            proVideoEnded = true;
+            proVideo.classList.add('ended');
+            proVideoEndframe.classList.add('visible');
+        });
+
+        // 使用 IntersectionObserver 检测滚动到视口时播放视频
+        const proVideoObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && !proVideoPlayed) {
+                    proVideoPlayed = true;
+                    proVideo.play().catch(() => {
+                        proVideoEnded = true;
+                        proVideo.classList.add('ended');
+                        proVideoEndframe.classList.add('visible');
+                    });
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        proVideoObserver.observe(proVideoSection);
+
+        // 滚动驱动动画
+        function updateProVideoScroll() {
+            proVideoTicking = false;
+
+            const sectionRect = proVideoSection.getBoundingClientRect();
+            const sectionTop = sectionRect.top;
+            const sectionHeight = proVideoSection.offsetHeight;
+            const windowHeight = window.innerHeight;
+
+            // 计算滚动进度：0 = section刚进入视口底部，1 = spacer滚动完毕
+            // sticky元素固定在top:0，所以sectionTop从正值变到负值
+            // 当sectionTop = 0时，sticky刚开始固定
+            // 滚动距离 = sectionHeight - windowHeight (spacer的高度部分)
+            const scrollableDistance = sectionHeight - windowHeight;
+
+            if (scrollableDistance <= 0) return;
+
+            // 当sectionTop <= 0 时，sticky已经固定，开始计算进度
+            // progress: 0 = 刚固定, 1 = 即将离开
+            let progress = 0;
+            if (sectionTop <= 0) {
+                progress = Math.min(1, Math.max(0, Math.abs(sectionTop) / scrollableDistance));
+            }
+
+            // ---- 视频缩放 ----
+            // Phase 1: progress 0~0.6 → 视频从 scale(1) 缩小到 scale(0.6)
+            const shrinkEnd = 0.6;
+            let scale = 1;
+            if (progress <= shrinkEnd) {
+                const shrinkProgress = progress / shrinkEnd;
+                scale = 1 - (0.4 * shrinkProgress); // 1 → 0.6
+            } else {
+                scale = 0.6;
+            }
+
+            proVideoWrapper.style.transform = `scale(${scale})`;
+
+            // ---- 文字动画 ----
+            if (proVideoOverlayText) {
+                // progress < 0.3: 文字在中间，完全可见
+                // progress 0.3~0.8: 文字从中间向上移动，逐渐消失
+                // progress > 0.8: 文字在顶部，完全消失
+                // 反向滚动时：文字从上方回到中间后停留显示
+                const textAppearStart = 0.3;
+                const textAppearEnd = 0.8;
+
+                if (progress < textAppearStart) {
+                    // 文字停留在中间，完全可见
+                    proVideoOverlayText.style.opacity = '1';
+                    proVideoOverlayText.style.transform = 'translate(-50%, -50%)';
+                } else if (progress >= textAppearStart && progress <= textAppearEnd) {
+                    // 文字从中间向上移动并逐渐消失
+                    const textProgress = (progress - textAppearStart) / (textAppearEnd - textAppearStart);
+
+                    // opacity: 1 → 0
+                    const textOpacity = 1 - textProgress;
+
+                    // translateY: 从中间(-50%)向上移动到 -130%
+                    const translateY = -50 - (textProgress * 80); // -50% → -130%
+
+                    proVideoOverlayText.style.opacity = `${textOpacity}`;
+                    proVideoOverlayText.style.transform = `translate(-50%, ${translateY}%)`;
+                } else {
+                    // 文字完全消失在顶部
+                    proVideoOverlayText.style.opacity = '0';
+                    proVideoOverlayText.style.transform = 'translate(-50%, -130%)';
+                }
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!proVideoTicking) {
+                requestAnimationFrame(updateProVideoScroll);
+                proVideoTicking = true;
+            }
+        }, { passive: true });
+
+        // 初始化
+        updateProVideoScroll();
+    }
+
+    // ---- 专业视频轮播图逻辑 ----
+    const proVideoCarouselTrack = document.getElementById('proVideoCarouselTrack');
+    const proVideoSlides = document.querySelectorAll('.pro-video-carousel-slide');
+    const proVideoPrevBtn = document.getElementById('proVideoCarouselPrev');
+    const proVideoNextBtn = document.getElementById('proVideoCarouselNext');
+
+    if (proVideoCarouselTrack && proVideoSlides.length > 0) {
+        let currentProVideoIndex = 0;
+        const totalProVideoSlides = proVideoSlides.length;
+
+        function updateProVideoCarousel() {
+            const isMobile = window.innerWidth <= 768;
+            const gap = isMobile ? 12 : 20;
+            const slideWidth = proVideoSlides[0].offsetWidth + gap;
+            const transformValue = -(currentProVideoIndex * slideWidth) + (proVideoCarouselTrack.parentElement.offsetWidth / 2 - slideWidth / 2);
+            proVideoCarouselTrack.style.transform = `translateX(${transformValue}px)`;
+
+            proVideoSlides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentProVideoIndex);
+            });
+        }
+
+        function goToProVideoSlide(index) {
+            currentProVideoIndex = Math.max(0, Math.min(index, totalProVideoSlides - 1));
+            updateProVideoCarousel();
+        }
+
+        if (proVideoPrevBtn) {
+            proVideoPrevBtn.addEventListener('click', () => {
+                goToProVideoSlide(currentProVideoIndex - 1);
+            });
+        }
+
+        if (proVideoNextBtn) {
+            proVideoNextBtn.addEventListener('click', () => {
+                goToProVideoSlide(currentProVideoIndex + 1);
+            });
+        }
+
+        updateProVideoCarousel();
+
+        window.addEventListener('resize', () => {
+            updateProVideoCarousel();
+        });
+    }
+
+    // ---- Shot on iPhone 视频弹窗逻辑 ----
+    const shotOnIphonePlayBtn = document.getElementById('shotOnIphonePlayBtn');
+    const shotOnIphoneVideoModal = document.getElementById('shotOnIphoneVideoModal');
+    const shotOnIphoneCloseModalBtn = document.getElementById('shotOnIphoneCloseModalBtn');
+    const shotOnIphoneModalBackdrop = document.getElementById('shotOnIphoneModalBackdrop');
+    const shotOnIphoneModalVideo = document.getElementById('shotOnIphoneVideo');
+
+    function openShotOnIphoneModal() {
+        if (shotOnIphoneVideoModal) {
+            shotOnIphoneVideoModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            if (shotOnIphoneModalVideo) {
+                shotOnIphoneModalVideo.play().catch(error => {
+                    console.log("Auto-play was prevented:", error);
+                });
+            }
+        }
+    }
+
+    function closeShotOnIphoneModal() {
+        if (shotOnIphoneVideoModal) {
+            shotOnIphoneVideoModal.classList.remove('active');
+            document.body.style.overflow = '';
+
+            if (shotOnIphoneModalVideo) {
+                shotOnIphoneModalVideo.pause();
+                shotOnIphoneModalVideo.currentTime = 0;
+            }
+        }
+    }
+
+    if (shotOnIphonePlayBtn) shotOnIphonePlayBtn.addEventListener('click', openShotOnIphoneModal);
+    if (shotOnIphoneCloseModalBtn) shotOnIphoneCloseModalBtn.addEventListener('click', closeShotOnIphoneModal);
+    if (shotOnIphoneModalBackdrop) shotOnIphoneModalBackdrop.addEventListener('click', closeShotOnIphoneModal);
+
+    // ---- 升级机型比较自定义下拉框逻辑 ----
+    const customSelectWrapper = document.getElementById('customSelectWrapper');
+    const selectTrigger = customSelectWrapper.querySelector('.custom-select-trigger');
+    const optionsContainer = customSelectWrapper.querySelector('.custom-options-container');
+    const customOptions = customSelectWrapper.querySelectorAll('.custom-option');
+    const selectedOptionText = document.getElementById('selectedOptionText');
+
+    const cpuStatValue = document.getElementById('cpuStatValue');
+    const gpuStatValue = document.getElementById('gpuStatValue');
+    const proStatValue = document.getElementById('proStatValue');
+    const maxStatValue = document.getElementById('maxStatValue');
+
+    // 切换下拉框显示
+    selectTrigger.addEventListener('click', (e) => {
+        customSelectWrapper.classList.toggle('open');
+        e.stopPropagation();
+    });
+
+    // 点击外部关闭下拉框
+    document.addEventListener('click', () => {
+        customSelectWrapper.classList.remove('open');
+    });
+
+    customOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            const val = this.getAttribute('data-value');
+            const text = this.textContent;
+
+            // 更新触发器文字
+            selectedOptionText.textContent = text;
+
+            // 更新选中状态
+            customOptions.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+
+            // 从 HTML data 属性读取完整内容
+            const cpuVal = this.getAttribute('data-cpu-val');
+            const gpuVal = this.getAttribute('data-gpu-val');
+            const proVal = this.getAttribute('data-pro-val');
+            const maxVal = this.getAttribute('data-max-val');
+
+            // 添加动画效果
+            const statsItems = document.querySelectorAll('.comp-stat-item');
+            statsItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(15px)';
+                item.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+
+            setTimeout(() => {
+                if (cpuStatValue) cpuStatValue.textContent = cpuVal;
+                if (gpuStatValue) gpuStatValue.textContent = gpuVal;
+                if (proStatValue) proStatValue.textContent = proVal;
+                if (maxStatValue) maxStatValue.textContent = maxVal;
+
+                statsItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, index * 60);
+                });
+            }, 350);
+
+            customSelectWrapper.classList.remove('open');
+        });
+    });
 
 });
