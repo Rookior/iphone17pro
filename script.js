@@ -545,4 +545,89 @@ document.addEventListener('DOMContentLoaded', () => {
         lensObserver.observe(lensSection);
     }
 
+    // ---- 出片轮播图逻辑 ----
+    const photoCarouselTrack = document.getElementById('photoCarouselTrack');
+    const photoSlides = document.querySelectorAll('.photo-carousel-slide');
+    const photoPrevBtn = document.getElementById('photoCarouselPrev');
+    const photoNextBtn = document.getElementById('photoCarouselNext');
+
+    if (photoCarouselTrack && photoSlides.length > 0) {
+        let currentPhotoIndex = 0;
+        const totalPhotoSlides = photoSlides.length;
+
+        function updatePhotoCarousel() {
+            const isMobile = window.innerWidth <= 768;
+            const gap = isMobile ? 12 : 20;
+            const slideWidth = photoSlides[0].offsetWidth + gap;
+            const transformValue = -(currentPhotoIndex * slideWidth) + (photoCarouselTrack.parentElement.offsetWidth / 2 - slideWidth / 2);
+            photoCarouselTrack.style.transform = `translateX(${transformValue}px)`;
+            
+            photoSlides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentPhotoIndex);
+            });
+        }
+
+        function goToPhotoSlide(index) {
+            currentPhotoIndex = Math.max(0, Math.min(index, totalPhotoSlides - 1));
+            updatePhotoCarousel();
+        }
+
+        if (photoPrevBtn) {
+            photoPrevBtn.addEventListener('click', () => {
+                goToPhotoSlide(currentPhotoIndex - 1);
+            });
+        }
+
+        if (photoNextBtn) {
+            photoNextBtn.addEventListener('click', () => {
+                goToPhotoSlide(currentPhotoIndex + 1);
+            });
+        }
+
+        updatePhotoCarousel();
+
+        window.addEventListener('resize', () => {
+            updatePhotoCarousel();
+        });
+    }
+
+    // ---- 拍照选项卡逻辑 ----
+    const cameraTabBtns = document.querySelectorAll('.camera-tab-btn');
+    const cameraTabContents = document.querySelectorAll('.camera-tab-content');
+    const cameraDescriptions = document.querySelectorAll('.camera-description');
+    const cameraTabVideos = document.querySelectorAll('.camera-tab-video');
+
+    if (cameraTabBtns.length > 0) {
+        function switchToCameraTab(index) {
+            cameraTabBtns.forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+
+            cameraTabContents.forEach((content, i) => {
+                content.classList.toggle('active', i === index);
+            });
+
+            cameraDescriptions.forEach((desc, i) => {
+                desc.classList.toggle('active', i === index);
+            });
+
+            cameraTabVideos.forEach((video, i) => {
+                if (i === index) {
+                    video.currentTime = 0;
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            });
+        }
+
+        cameraTabBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                switchToCameraTab(index);
+            });
+        });
+
+        switchToCameraTab(0);
+    }
+
 });

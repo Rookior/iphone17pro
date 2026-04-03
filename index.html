@@ -792,7 +792,137 @@
             </div>
         </section>
 
-        
+        <!-- 出片轮播图 Section -->
+        <section class="photo-carousel-section">
+            <div class="photo-carousel-container">
+                <h2 class="photo-carousel-title">Pro 级大片，每个像素都出片。</h2>
+                
+                <div class="photo-carousel-track-wrapper">
+                    <div class="photo-carousel-track" id="photoCarouselTrack">
+                        <!-- Slide 1 -->
+                        <div class="photo-carousel-slide">
+                            <div class="photo-slide-card">
+                                <img src="img/出片/48mp__tuwanegt2r6u_large.jpg" alt="4800万像素主摄">
+                                <p class="photo-slide-description">全新"珠光"摄影风格亮相。为人物的肤色增添一抹自然柔和的亮色，显得更明媚通透、神采奕奕，让你看起来由内而外光彩夺目。</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 2 -->
+                        <div class="photo-carousel-slide">
+                            <div class="photo-slide-card">
+                                <img src="img/出片/night_mode__ck9xa9ku3fxy_large.jpg" alt="夜间模式">
+                                <p class="photo-slide-description">低光摄影和夜间模式。即使光线昏暗，也能拍到清晰锐利、细节丰富、明亮通透的画面，呈现自然鲜活的色彩。</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 3 -->
+                        <div class="photo-carousel-slide">
+                            <div class="photo-slide-card">
+                                <img src="img/出片/photographic_styles__ejdtzof0t8sy_large.webp" alt="摄影风格">
+                                <p class="photo-slide-description">摄影风格助你轻松打造个人化风格。选择高对比度、高饱和度、暖色调或冷色调等预设风格，还能进一步调节参数。</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 4 -->
+                        <div class="photo-carousel-slide">
+                            <div class="photo-slide-card">
+                                <img src="img/出片/uw48mp__fxddw4t4p5qq_large.jpg" alt="超广角">
+                                <p class="photo-slide-description">超广角摄像头支持4800万像素。现在你可以拍出更清晰、细节更丰富的超广角照片，或者进行二次构图，依然能获得精彩的画面。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="photo-carousel-controls-bottom">
+                    <button class="photo-carousel-btn photo-carousel-btn-prev" id="photoCarouselPrev" aria-label="上一张">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M15.41,7.41L14,6L8,12L14,18L15.41,16.59L10.83,12L15.41,7.41Z"/>
+                        </svg>
+                    </button>
+                    <button class="photo-carousel-btn photo-carousel-btn-next" id="photoCarouselNext" aria-label="下一张">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M8.59,16.59L10,18L16,12L10,6L8.59,7.41L13.17,12L8.59,16.59Z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div class="viewport-content headline-container">
+            <div class="ps-section-header">
+                <p class="ps-headline">1800 万像素 <br class="large-hide medium-hide small-show">Center&nbsp;Stage 前摄，<br>新派摄手破框而出。</p>
+            </div>
+        </div>
+        <div class="ps-header-copy">
+            <p>全新前置摄像头，让你取景构图更灵活，拍照拍视频都有更多花样。<strong>无需转动 iPhone</strong>，轻轻一点就能扩大取景范围，还能从纵向转到横向。有朋友入镜时，视野会自动扩大，让更多朋友加入你的<span class="nowrap">大合照。</span></p>
+        </div>
+
+        <!-- 拍照选项卡 Section -->
+        <section class="camera-tabs-section">
+            <div class="camera-tabs-container">
+                <div class="camera-preview-wrapper">
+                    <div class="camera-preview-frame">
+                        <img src="video/拍照/hw__cf6xzzs5yb0i_large.png" alt="iPhone 预览框" class="camera-frame-bg">
+                        
+                        <!-- 选项内容 -->                   
+                        <div class="camera-tab-content" data-tab="1">
+                            <video class="camera-tab-video" muted playsinline>
+                                <source src="video/拍照/拍照人物居中.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="camera-tab-content" data-tab="2">
+                            <video class="camera-tab-video" muted playsinline>
+                                <source src="video/拍照/视频同步双拍.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="camera-tab-content" data-tab="3">
+                            <video class="camera-tab-video" muted playsinline>
+                                <source src="video/拍照/视频超稳防抖.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="camera-tab-content active" data-tab="0">
+                            <img src="video/拍照/视频通话人物居中.jpg" alt="拍照">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 选项卡按钮 -->
+                <div class="camera-tabs-wrapper">
+                    <button class="camera-tab-btn active" data-tab="0">
+                        <span class="camera-tab-icon">拍照</span>
+                        <span class="camera-tab-label">人物居中</span>
+                    </button>
+                    <button class="camera-tab-btn" data-tab="1">
+                        <span class="camera-tab-icon">视频</span>
+                        <span class="camera-tab-label">同步双拍</span>
+                    </button>
+                    <button class="camera-tab-btn" data-tab="2">
+                        <span class="camera-tab-icon">视频</span>
+                        <span class="camera-tab-label">超稳防抖</span>
+                    </button>
+                    <button class="camera-tab-btn" data-tab="3">
+                        <span class="camera-tab-icon">视频通话</span>
+                        <span class="camera-tab-label">人物居中</span>
+                    </button>
+                </div>
+
+                <!-- 文字描述 -->
+                <div class="camera-description-wrapper">
+                    <p class="camera-description active" data-tab="0">
+                        人物居中功能让你一直处于画面中心。无论你怎么移动，镜头都会自动调整，让你保持在C位。
+                    </p>
+                    <p class="camera-description" data-tab="1">
+                        同步双拍让你同时拍下前后镜头的画面。一个镜头拍你，一个镜头拍你的反应，创造双倍精彩。
+                    </p>
+                    <p class="camera-description" data-tab="2">
+                        超稳防抖让你的视频画面稳如泰山。即使在运动中拍摄，画面依然清晰稳定，电影质感随手可得。
+                    </p>
+                    <p class="camera-description" data-tab="3">
+                        人工智能会自动调整画面构图，让你在视频会议和 FaceTime 视频通话中稳居前排 C 位。
+                    </p>
+                </div>
+            </div>
+        </section>
 
     </main>
 

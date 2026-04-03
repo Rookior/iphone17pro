@@ -1944,7 +1944,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    max-width: 1400px;
+    max-width: 100%;
 }
 
 .focal-nav-btn {
@@ -1979,7 +1979,7 @@ body {
     border-radius: 999px;
     padding: 6px;
     overflow-x: auto;
-    max-width: 1400px;
+    max-width: 100%;
     scrollbar-width: none;
 }
 
@@ -2220,5 +2220,414 @@ body {
 
     .camera-feature-card {
         text-align: center;
+    }
+}
+
+/* 出片轮播图 Section */
+.photo-carousel-section {
+    background-color: #000;
+    padding: 80px 0 100px 0;
+    width: 100%;
+}
+
+.photo-carousel-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photo-carousel-title {
+    font-size: 40px;
+    font-weight: 700;
+    color: #f5f5f7;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 40px;
+    letter-spacing: -0.01em;
+}
+
+.photo-carousel-track-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.photo-carousel-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    gap: 20px;
+    padding: 0;
+}
+
+.photo-carousel-slide {
+    flex: 0 0 70%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.photo-slide-card {
+    background-color: #000;
+    border-radius: 40px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    opacity: 0.6;
+    transform: scale(0.92);
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.photo-carousel-slide.active .photo-slide-card {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.photo-slide-card img {
+    width: 100%;
+    height: 500px;
+    border-radius: 40px;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-slide-description {
+    font-size: 14px;
+    font-weight: 500;
+    color: #a1a1a6;
+    padding: 24px 40px 40px;
+    margin: 0;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+}
+
+.photo-carousel-controls-bottom {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.photo-carousel-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: #f5f5f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.photo-carousel-btn:hover {
+    background-color: rgba(255, 255, 255, 0.16);
+    transform: scale(1.05);
+}
+
+.photo-carousel-btn svg {
+    display: block;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .photo-carousel-section {
+        padding: 60px 0 80px 0;
+    }
+
+    .photo-carousel-title {
+        font-size: 28px;
+        margin-bottom: 24px;
+    }
+
+    .photo-carousel-track-wrapper {
+        padding: 0;
+    }
+
+    .photo-carousel-track {
+        gap: 12px;
+        padding: 0;
+    }
+
+    .photo-carousel-slide {
+        flex: 0 0 85%;
+    }
+
+    .photo-carousel-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    .photo-carousel-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .photo-slide-card img {
+        height: 280px;
+        border-radius: 24px;
+    }
+
+    .photo-slide-description {
+        font-size: 13px;
+        padding: 16px 16px 24px;
+    }
+}
+
+/* 前置摄像头介绍 Section */
+.viewport-content {
+    background-color: #000;
+    padding: 120px 22px 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.headline-container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.ps-section-header {
+    text-align: center;
+}
+
+.ps-headline {
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 700;
+    color: #f5f5f7;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+.large-hide{
+    display: none;
+}
+
+.ps-header-copy {
+    background-color: #000 !important;
+    padding: 0 22px 120px !important;
+    display: flex !important;
+    justify-content: center !important;
+    position: relative !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.ps-header-copy p {
+    max-width: 840px !important;
+    font-size: clamp(19px, 2.5vw, 24px) !important;
+    font-weight: 500 !important;
+    color: #86868b !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.01em !important;
+    text-align: center !important;
+    margin: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
+
+.ps-header-copy strong {
+    color: #f5f5f7;
+    font-weight: 600;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .viewport-content {
+        padding: 80px 22px 30px;
+    }
+
+    .ps-header-copy {
+        padding: 0 22px 80px;
+    }
+
+    .ps-header-copy p {
+        font-size: 17px;
+    }
+
+    .large-hide{
+        display: block;
+    }
+}
+
+/* 拍照选项卡 Section */
+.camera-tabs-section {
+    background-color: #000;
+    padding: 80px 0 120px;
+    width: 100%;
+}
+
+.camera-tabs-container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.camera-preview-wrapper {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 60px;
+}
+
+.camera-preview-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9/19.5;
+}
+
+.camera-frame-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+}
+
+.camera-tab-content {
+    position: absolute;
+    top: 3.5%;
+    left: 7%;
+    right: 7%;
+    bottom: 3.5%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.camera-tab-content.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.camera-tab-content img,
+.camera-tab-content video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 40px;
+}
+
+.camera-tabs-wrapper {
+    display: flex;
+    gap: 12px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 8px;
+    margin-bottom: 40px;
+}
+
+.camera-tab-btn {
+    background: none;
+    border: none;
+    color: #a1a1a6;
+    padding: 16px 24px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 100px;
+}
+
+.camera-tab-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.camera-tab-btn.active {
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+}
+
+.camera-tab-icon {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.camera-tab-label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.camera-description-wrapper {
+    text-align: center;
+    max-width: 800px;
+}
+
+.camera-description {
+    font-size: 21px;
+    font-weight: 500;
+    color: #86868b;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.camera-description.active {
+    opacity: 1;
+    position: relative;
+}
+
+.camera-description-wrapper {
+    text-align: center;
+    max-width: 800px;
+    position: relative;
+    min-height: 100px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .camera-tabs-section {
+        padding: 60px 0 80px;
+    }
+
+    .camera-preview-wrapper {
+        max-width: 320px;
+        margin-bottom: 40px;
+    }
+
+    .camera-tabs-wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .camera-tab-btn {
+        padding: 12px 16px;
+        min-width: 80px;
+    }
+
+    .camera-tab-icon {
+        font-size: 12px;
+    }
+
+    .camera-tab-label {
+        font-size: 11px;
+    }
+
+    .camera-description {
+        font-size: 17px;
     }
 }
