@@ -1065,6 +1065,192 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ---- 好处多多 (Benefits) 轮播图逻辑 ----
+    const benefitsCarousel = document.getElementById('benefitsCarousel');
+    const benefitsPrevBtn = document.getElementById('benefitsPrev');
+    const benefitsNextBtn = document.getElementById('benefitsNext');
+
+    if (benefitsCarousel) {
+        function updateBenefitsNav() {
+            const scrollLeft = benefitsCarousel.scrollLeft;
+            const maxScrollLeft = benefitsCarousel.scrollWidth - benefitsCarousel.clientWidth;
+
+            if (benefitsPrevBtn) benefitsPrevBtn.disabled = scrollLeft <= 10;
+            if (benefitsNextBtn) benefitsNextBtn.disabled = scrollLeft >= maxScrollLeft - 10;
+        }
+
+        function getScrollAmount() {
+            // 获取第一张卡片的宽度 + gap (24px)
+            const firstCard = benefitsCarousel.querySelector('.benefit-card');
+            if (firstCard) {
+                return firstCard.offsetWidth + 24;
+            }
+            return 424; // fallback
+        }
+
+        if (benefitsPrevBtn) {
+            benefitsPrevBtn.addEventListener('click', () => {
+                benefitsCarousel.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+            });
+        }
+
+        if (benefitsNextBtn) {
+            benefitsNextBtn.addEventListener('click', () => {
+                benefitsCarousel.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+            });
+        }
+
+        benefitsCarousel.addEventListener('scroll', updateBenefitsNav);
+
+        // 初始化
+        setTimeout(updateBenefitsNav, 100);
+        window.addEventListener('resize', updateBenefitsNav);
+    }
+
+    // ---- 环境 (Environment) 轮播图与弹窗逻辑 ----
+    const envCarousel = document.getElementById('envCarousel');
+    const envPrevBtn = document.getElementById('envPrev');
+    const envNextBtn = document.getElementById('envNext');
+
+    if (envCarousel) {
+        const envNavContainer = document.querySelector('.env-nav');
+
+        function updateEnvNav() {
+            const scrollLeft = envCarousel.scrollLeft;
+            const maxScrollLeft = envCarousel.scrollWidth - envCarousel.clientWidth;
+
+            if (envPrevBtn) envPrevBtn.disabled = scrollLeft <= 10;
+            if (envNextBtn) envNextBtn.disabled = scrollLeft >= maxScrollLeft - 10;
+
+            if (envNavContainer) {
+                if (maxScrollLeft <= 0) {
+                    envNavContainer.style.display = 'none';
+                } else {
+                    envNavContainer.style.display = 'flex';
+                }
+            }
+        }
+
+        function getEnvScrollAmount() {
+            // 获取第一张卡片的宽度 + gap (24px)
+            const firstCard = envCarousel.querySelector('.env-card');
+            if (firstCard) {
+                return firstCard.offsetWidth + 24;
+            }
+            return 344; // fallback
+        }
+
+        if (envPrevBtn) {
+            envPrevBtn.addEventListener('click', () => {
+                envCarousel.scrollBy({ left: -getEnvScrollAmount(), behavior: 'smooth' });
+            });
+        }
+
+        if (envNextBtn) {
+            envNextBtn.addEventListener('click', () => {
+                envCarousel.scrollBy({ left: getEnvScrollAmount(), behavior: 'smooth' });
+            });
+        }
+
+        envCarousel.addEventListener('scroll', updateEnvNav);
+
+        // 初始更新和resize
+        setTimeout(updateEnvNav, 100);
+        window.addEventListener('resize', updateEnvNav);
+    }
+
+    // 通用 Modal 逻辑
+    function setupModal(overlayId, plusBtnSelector, containerSelector) {
+        const overlay = document.getElementById(overlayId);
+        if (!overlay) return;
+
+        const plusBtns = document.querySelectorAll(plusBtnSelector);
+        const closeBtns = overlay.querySelectorAll('.env-modal-close');
+        const containers = overlay.querySelectorAll(containerSelector);
+
+        function closeAll() {
+            overlay.classList.remove('active');
+            containers.forEach(m => m.style.display = 'none');
+            document.body.style.overflow = '';
+        }
+
+        plusBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modalId = btn.getAttribute('data-modal');
+                if (!modalId) return;
+                const targetModal = document.getElementById(modalId);
+                if (targetModal) {
+                    containers.forEach(m => m.style.display = 'none');
+                    targetModal.style.display = 'block';
+                    // Force reflow
+                    void targetModal.offsetWidth;
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        closeBtns.forEach(btn => btn.addEventListener('click', closeAll));
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeAll();
+        });
+    }
+
+    // 初始化各板块弹窗
+    setupModal('envModalOverlay', '.env-btn-plus', '.env-modal-container');
+    setupModal('benefitModalOverlay', '.benefit-icon-plus[data-modal]', '.env-modal-container');
+
+
+    // ---- 价值观 (Values) 轮播图逻辑 ----
+    const valuesCarousel = document.getElementById('valuesCarousel');
+    const valuesPrevBtn = document.getElementById('valuesPrev');
+    const valuesNextBtn = document.getElementById('valuesNext');
+
+    if (valuesCarousel) {
+        const valuesNavContainer = document.querySelector('.values-nav');
+
+        function updateValuesNav() {
+            const scrollLeft = valuesCarousel.scrollLeft;
+            const maxScrollLeft = valuesCarousel.scrollWidth - valuesCarousel.clientWidth;
+
+            if (valuesPrevBtn) valuesPrevBtn.disabled = scrollLeft <= 10;
+            if (valuesNextBtn) valuesNextBtn.disabled = scrollLeft >= maxScrollLeft - 10;
+
+            if (valuesNavContainer) {
+                if (maxScrollLeft <= 0) {
+                    valuesNavContainer.style.display = 'none';
+                } else {
+                    valuesNavContainer.style.display = 'flex';
+                }
+            }
+        }
+
+        function getValuesScrollAmount() {
+            // 获取第一张卡片的宽度 + gap (24px)
+            const firstCard = valuesCarousel.querySelector('.values-card');
+            if (firstCard) {
+                return firstCard.offsetWidth + 24;
+            }
+            return 404; // fallback
+        }
+
+        if (valuesPrevBtn) {
+            valuesPrevBtn.addEventListener('click', () => {
+                valuesCarousel.scrollBy({ left: -getValuesScrollAmount(), behavior: 'smooth' });
+            });
+        }
+
+        if (valuesNextBtn) {
+            valuesNextBtn.addEventListener('click', () => {
+                valuesCarousel.scrollBy({ left: getValuesScrollAmount(), behavior: 'smooth' });
+            });
+        }
+
+        valuesCarousel.addEventListener('scroll', updateValuesNav);
+
+        // 初始更新和resize
+        setTimeout(updateValuesNav, 100);
+        window.addEventListener('resize', updateValuesNav);
+    }
+
 });
-
-
