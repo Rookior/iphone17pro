@@ -4291,6 +4291,120 @@ body {
     }
 }
 
+
+/* Upgrade Section */
+.upgrade-section {
+    padding: 80px 0;
+    background-color: #f5f5f7;
+}
+
+.upgrade-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 22px;
+}
+
+.upgrade-card {
+    background-color: #ffffff;
+    border-radius: 30px;
+    overflow: hidden;
+    padding: 0 80px;
+    /* min-height: 500px; */
+    display: flex;
+    align-items: center;
+}
+
+.upgrade-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+}
+
+.upgrade-text {
+    flex: 1;
+    max-width: 320px;
+    padding: 40px 0;
+}
+
+.upgrade-title {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+    color: #1d1d1f;
+}
+
+.upgrade-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.upgrade-image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Section Header Shared Style */
+.section-header {
+    margin-bottom: 40px;
+}
+
+.section-headline {
+    font-size: 48px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+/* Mobile responsive for upgrade */
+@media (max-width: 768px) {
+    .upgrade-section {
+        padding: 60px 0;
+    }
+
+    .section-headline {
+        font-size: 32px;
+    }
+
+    .upgrade-card {
+        padding: 50px 20px 0;
+        min-height: auto;
+        display: block;
+    }
+
+    .upgrade-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 0;
+    }
+
+    .upgrade-title {
+        font-size: 28px;
+        margin-bottom: 24px;
+        line-height: 1.25;
+    }
+
+    .upgrade-text {
+        max-width: 100%;
+        padding: 0 0 40px 0;
+    }
+
+    .upgrade-image {
+        justify-content: center;
+    }
+
+    .upgrade-image img {
+        max-width: 90%;
+    }
+}
+
 /* Benefits Section */
 .benefits-section {
     background-color: #f5f5f7;
